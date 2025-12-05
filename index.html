@@ -2,17 +2,14 @@
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>✨ நண்பர்கள் கிஃப்ட் குலுக்கல் ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary-color: #d63384;
-            --secondary-color: #6f42c1;
-            --accent-gold: #ffd700;
-            --glass-bg: rgba(255, 255, 255, 0.90);
-            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.95); /* மொபைலில் தெளிவாக தெரிய 95% opacity */
         }
 
         body {
@@ -21,19 +18,256 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: 100vh; /* மொபைல் திரை முழுவதும் நிரம்ப */
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* ஸ்க்ரால் ஆவதை தடுக்க */
         }
 
-        .container { perspective: 1000px; padding: 20px; width: 100%; display: flex; justify-content: center;}
+        .container {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box;
+        }
 
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--glass-border);
-            padding: 40px 30px;
-            border-radius: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 90%; /* மொபைலில் அகலமாகத் தெரிய */
+            max-width: 380px; /* டெஸ்க்டாப்பில் அதிக அகலமாகாமல் இருக்க */
+            text-align: center;
+            position: relative;
+            transform: translateY(0);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h2.main-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        /* Gift Box Styles */
+        .gift-container {
+            cursor: pointer;
+            position: relative;
+            width: 100px; /* மொபைலுக்கு ஏற்ற அளவு */
+            height: 100px;
+            margin: 0 auto 25px;
+            transition: transform 0.2s;
+            -webkit-tap-highlight-color: transparent; /* மொபைல் டச் ஹைலைட்டை நீக்க */
+        }
+
+        .gift-container:active { transform: scale(0.95); }
+        
+        .gift-box {
+            position: relative; width: 100%; height: 100%;
+            animation: floatGift 3s ease-in-out infinite;
+        }
+
+        @keyframes floatGift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gift-box.shake { animation: shakeGift 0.5s ease-in-out forwards; }
+        @keyframes shakeGift {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
+        }
+
+        .gift-lid {
+            position: absolute; top: 0; left: 0; width: 100%; height: 25%;
+            background: #ff4757; border-radius: 5px 5px 0 0; z-index: 2;
+            transition: all 0.5s;
+        }
+        .gift-body {
+            position: absolute; bottom: 0; left: 5%; width: 90%; height: 80%;
+            background: #ff6b81; border-radius: 0 0 5px 5px; z-index: 1;
+        }
+        .ribbon-vertical {
+            position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+            width: 15px; height: 100%; background: #ffd700; z-index: 3;
+        }
+        
+        .gift-container.open .gift-lid {
+            transform: translateY(-60px) rotate(-20deg); opacity: 0;
+        }
+
+        /* Result Section */
+        #resultSection { display: none; opacity: 0; transition: opacity 0.5s; }
+        #resultSection.show { display: block; opacity: 1; }
+
+        .target-name {
+            font-size: 2.2rem;
+            color: #28a745;
+            font-weight: 800;
+            margin: 15px 0;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+            word-wrap: break-word; /* நீண்ட பெயர்கள் உடையாமல் இருக்க */
+        }
+
+        .error-box {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .tap-hint {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-top: -10px;
+            margin-bottom: 5px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% {opacity: 0.6;} 50% {opacity: 1;} 100% {opacity: 0.6;} }
+
+        /* சிறிய மொபைல்களுக்கான அட்ஜஸ்ட்மென்ட் */
+        @media (max-height: 600px) {
+            .glass-card { padding: 20px; }
+            h2.main-title { font-size: 1.5rem; }
+            .gift-container { width: 80px; height: 80px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <div id="errorState" class="error-box">
+            ⚠️ <b>லிங்க் தவறு!</b><br>
+            சரியான லிங்கை பயன்படுத்தவும்.<br>
+            <span style="font-size:12px; color:#555;">(எ.கா: ?id=8xK29a)</span>
+        </div>
+
+        <div id="mainContent" style="display:none;">
+            <h2 class="main-title">Secret Santa Reveal</h2>
+            
+            <p class="greeting">ஹாய் <span id="userName" style="color:#d63384; font-weight:bold;"></span>! 👋</p>
+            
+            <div class="gift-container" id="giftBox" onclick="openGift()">
+                <div class="gift-box">
+                    <div class="gift-lid">
+                        <div class="ribbon-vertical"></div>
+                    </div>
+                    <div class="gift-body">
+                        <div class="ribbon-vertical"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="tap-hint" id="tapText">👇 திறக்க கிஃப்ட்டை தொடவும் 👇</p>
+
+            <div id="resultSection">
+                <hr style="opacity: 0.3; margin: 15px 0;">
+                <p style="color: #555; font-size: 0.9rem;">நீங்க கிஃப்ட் கொடுக்க வேண்டியது:</p>
+                <h1 id="targetName" class="target-name"></h1>
+                <p style="color: #888; font-size: 0.8rem; margin-top: 20px;">🤫 இது ரகசியம்! யார்கிட்டயும் சொல்லாதீங்க.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    // இங்கே பாதுகாப்பான ID லிஸ்ட் உள்ளது. பழைய பெயர்கள் தேவையில்லை.
+    const secretData = {
+        "8xK29a": { user: "Rakshana", target: "Ramsi" },
+        "b7L3mP": { user: "Ramsi", target: "Rasmi" },
+        "9qW4nR": { user: "Rasmi", target: "Afeela" },
+        "j2K8xZ": { user: "Afeela", target: "Sumaiya" },
+        "m5N9vQ": { user: "Sumaiya", target: "Aysha" },
+        "p1R6tY": { user: "Aysha", target: "Aisama" },
+        "v3X7cB": { user: "Aisama", target: "Baby" },
+        "z8M2wL": { user: "Baby", target: "Vahidha" },
+        "d4H6jK": { user: "Vahidha", target: "Aafila" },
+        "g9S2fD": { user: "Aafila", target: "Suppana" },
+        "t5Y8nH": { user: "Suppana", target: "Fathima" },
+        "c3P6kM": { user: "Fathima", target: "Rakshana" }
+    };
+
+    let currentUserData = null;
+    let isOpened = false;
+
+    window.onload = function() {
+        // URL-ல் இருந்து ID எடுப்பது
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        if (id && secretData[id]) {
+            // சரியான ID இருந்தால் காட்டவும்
+            currentUserData = secretData[id];
+            document.getElementById("userName").innerText = currentUserData.user;
+            document.getElementById("mainContent").style.display = "block";
+        } else {
+            // தவறான ID என்றால் எரர் காட்டவும்
+            document.getElementById("errorState").style.display = "block";
+        }
+    };
+
+    function openGift() {
+        if (isOpened) return;
+        isOpened = true;
+
+        const giftBox = document.querySelector('.gift-box');
+        const giftContainer = document.getElementById('giftBox');
+        
+        // அனிமேஷன் தொடக்கம்
+        giftBox.classList.add('shake');
+        document.getElementById('tapText').style.display = 'none'; // எழுத்தை மறை
+
+        setTimeout(() => {
+            // பெட்டி திறத்தல்
+            giftContainer.classList.add('open');
+            launchConfetti();
+
+            // ரிசல்ட் காட்டுதல்
+            setTimeout(() => {
+                giftContainer.style.display = 'none'; // பெட்டியை மறை
+                document.getElementById("targetName").innerText = currentUserData.target;
+                document.getElementById("resultSection").classList.add('show');
+                launchConfetti(); // மீண்டும் ஒரு முறை Confetti
+            }, 600);
+
+        }, 500);
+    }
+
+    // Confetti எஃபெக்ட்
+    function launchConfetti() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff4757', '#2ecc71', '#f1c40f', '#8e44ad'],
+            disableForReducedMotion: true
+        });
+    }
+</script>
+
+</body>
+</html>
             box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             width: 100%;
             max-width: 400px;
