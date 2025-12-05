@@ -3,149 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>நண்பர்கள் கிஃப்ட் குலுக்கல் 🎁</title>
+    <title>✨ நண்பர்கள் கிஃப்ட் குலுக்கல் ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
+        :root {
+            --primary-color: #d63384;
+            --secondary-color: #6f42c1;
+            --accent-gold: #ffd700;
+            --glass-bg: rgba(255, 255, 255, 0.90);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            text-align: center;
+            overflow: hidden;
         }
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            width: 90%;
+
+        .container { perspective: 1000px; padding: 20px; width: 100%; display: flex; justify-content: center;}
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--glass-border);
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            width: 100%;
             max-width: 400px;
-        }
-        h2 { color: #d63384; margin-bottom: 20px; }
-        input {
-            width: 80%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
             text-align: center;
+            position: relative;
         }
-        button {
-            background-color: #d63384;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 8px;
+
+        h2.main-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-top: 0;
+        }
+
+        .greeting {
+            font-size: 1.1rem;
+            color: #444;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        /* Gift Box Animation */
+        .gift-container {
             cursor: pointer;
-            transition: 0.3s;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            transition: transform 0.3s;
         }
-        button:hover { background-color: #a82465; }
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            display: none;
+
+        .gift-container:hover { transform: scale(1.05); }
+        
+        .gift-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            animation: floatGift 3s ease-in-out infinite;
+        }
+
+        @keyframes floatGift {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .gift-box.shake { animation: shakeGift 0.5s ease-in-out forwards; }
+        
+        @keyframes shakeGift {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .gift-lid {
+            position: absolute; top: 0; left: 0; width: 100%; height: 25%;
+            background: #ff4757; border-radius: 5px 5px 0 0; z-index: 2;
+            transition: all 0.5s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .gift-body {
+            position: absolute; bottom: 0; left: 5%; width: 90%; height: 80%;
+            background: #ff6b81; border-radius: 0 0 5px 5px; z-index: 1;
+        }
+
+        .ribbon-vertical {
+            position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+            width: 15px; height: 100%; background: var(--accent-gold); z-index: 3;
+        }
+        
+        .gift-container.open .gift-lid {
+            transform: translateY(-80px) rotate(-20deg); opacity: 0;
+        }
+
+        /* Result Section */
+        #resultSection { display: none; opacity: 0; transition: opacity 0.5s; }
+        #resultSection.show { display: block; opacity: 1; }
+
+        .target-name {
+            font-size: 2.5rem;
+            color: #2ecc71;
+            font-weight: 800;
+            margin: 15px 0;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+        }
+
+        .error-box {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
             padding: 15px;
-            background: #fff3cd;
-            border-radius: 8px;
-            border: 1px solid #ffeeba;
+            border-radius: 10px;
+            display: none;
         }
-        .error { color: red; font-size: 14px; margin-top: 5px; }
-        .locked-msg { color: #666; font-size: 12px; margin-top: 15px; }
+
+        .instruction { font-size: 0.85rem; color: #666; margin-top: 20px; }
+        .tap-hint { font-size: 0.8rem; color: var(--primary-color); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% {opacity: 0.6;} 50% {opacity: 1;} 100% {opacity: 0.6;} }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>🎁 Secret Gift 🎁</h2>
-    
-    <div id="inputSection">
-        <p>உங்க பெயரை கீழே டைப் பண்ணுங்க:</p>
-        <input type="text" id="nameInput" placeholder="உங்க பெயர் (Ex: Rakshana)">
-        <br>
-        <button onclick="findMyPair()">யார் என் ஜோடி?</button>
-        <p id="errorMsg" class="error"></p>
-    </div>
+<div class="container">
+    <div class="glass-card">
+        <div id="errorState" class="error-box">
+            ⚠️ <b>தவறான லிங்க்!</b><br>
+            தயவுசெய்து உங்களுக்கு அனுப்பப்பட்ட லிங்கை சரியாக பயன்படுத்தவும்.
+        </div>
 
-    <div id="resultSection" class="result">
-        <p>ஹாய் <span id="userNameDisplay" style="color:#d63384;"></span>! 👋</p>
-        <hr>
-        <p>நீங்க கிஃப்ட் 🎁 வாங்கி கொடுக்க வேண்டிய ஆள்:</p>
-        <h1 id="targetName" style="color:#28a745;"></h1>
-        <p class="locked-msg">⚠️ குறிப்பு: இந்த ரிசல்ட் உங்களுக்கு மட்டும் தான் தெரியும்.</p>
+        <div id="mainContent" style="display:none;">
+            <h2 class="main-title">Secret Santa Reveal</h2>
+            
+            <p class="greeting">ஹாய் <span id="userName" style="color:#d63384; font-weight:bold;"></span>! 👋</p>
+            
+            <div class="gift-container" id="giftBox" onclick="openGift()">
+                <p class="tap-hint">👇 திறக்க தொடவும் 👇</p>
+                <div class="gift-box">
+                    <div class="gift-lid">
+                        <div class="ribbon-vertical"></div>
+                    </div>
+                    <div class="gift-body">
+                        <div class="ribbon-vertical"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultSection">
+                <hr style="opacity: 0.3; margin: 20px 0;">
+                <p style="color: #555;">நீங்க கிஃப்ட் கொடுக்க வேண்டியது:</p>
+                <h1 id="targetName" class="target-name"></h1>
+                <p class="instruction">🤫 Shhh! இது பரம ரகசியம்.</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    // 1. பெயர் பட்டியல் மற்றும் ஜோடிகள் (Hardcoded Chain)
-    // இது ஒரு வட்டம் போல: Rakshana -> Ramsi, Ramsi -> Rasmi... கடைசி ஆள் -> Rakshana
-    const data = {
-        "rakshana": "Ramsi",
-        "ramsi": "Rasmi",
-        "rasmi": "Afeela",
-        "afeela": "Sumaiya",
-        "sumaiya": "Aysha",
-        "aysha": "Aisama",
-        "aisama": "Baby",
-        "baby": "Vahidha",
-        "vahidha": "Aafila",
-        "aafila": "Suppana",
-        "suppana": "Fathima",
-        "fathima": "Rakshana"
+    // பாதுகாப்பான முறை: ரகசிய குறியீடுகள் (IDs)
+    // இங்கே ID என்பது ஒரு பாஸ்வேர்ட் போல செயல்படும். பெயரை வைத்து கண்டுபிடிக்க முடியாது.
+    const secretData = {
+        "8xK29a": { user: "Rakshana", target: "Ramsi" },
+        "b7L3mP": { user: "Ramsi", target: "Rasmi" },
+        "9qW4nR": { user: "Rasmi", target: "Afeela" },
+        "j2K8xZ": { user: "Afeela", target: "Sumaiya" },
+        "m5N9vQ": { user: "Sumaiya", target: "Aysha" },
+        "p1R6tY": { user: "Aysha", target: "Aisama" },
+        "v3X7cB": { user: "Aisama", target: "Baby" },
+        "z8M2wL": { user: "Baby", target: "Vahidha" },
+        "d4H6jK": { user: "Vahidha", target: "Aafila" },
+        "g9S2fD": { user: "Aafila", target: "Suppana" },
+        "t5Y8nH": { user: "Suppana", target: "Fathima" },
+        "c3P6kM": { user: "Fathima", target: "Rakshana" }
     };
 
-    // சரியான பெயர்களின் பட்டியல் (For Matching)
-    const validNames = Object.keys(data);
+    let currentUserData = null;
+    let isOpened = false;
 
-    // Page Load ஆகும்போது செக் செய்தல்
     window.onload = function() {
-        const savedName = localStorage.getItem('secretSantaUser');
-        if (savedName) {
-            showResult(savedName, data[savedName]);
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id'); // URL-ல் இருந்து ID-ஐ எடுக்கும்
+
+        if (id && secretData[id]) {
+            // சரியான ID இருந்தால்
+            currentUserData = secretData[id];
+            document.getElementById("userName").innerText = currentUserData.user;
+            document.getElementById("mainContent").style.display = "block";
+        } else {
+            // தவறான ID அல்லது ID இல்லை என்றால்
+            document.getElementById("errorState").style.display = "block";
         }
     };
 
-    function findMyPair() {
-        let input = document.getElementById("nameInput").value.trim().toLowerCase();
-        let errorMsg = document.getElementById("errorMsg");
+    function openGift() {
+        if (isOpened) return;
+        isOpened = true;
+
+        const giftBox = document.querySelector('.gift-box');
+        const giftContainer = document.getElementById('giftBox');
         
-        if (input.length < 3) {
-            errorMsg.innerText = "பெயரை சரியாக டைப் செய்யவும்!";
-            return;
-        }
+        // 1. Shake Animation
+        giftBox.classList.add('shake');
+        document.querySelector('.tap-hint').style.display = 'none';
 
-        // Fuzzy Matching (எழுத்து பிழை இருந்தாலும் கண்டுபிடித்தல்)
-        let matchedName = getClosestName(input);
+        setTimeout(() => {
+            // 2. Open Animation & Confetti
+            giftContainer.classList.add('open');
+            launchConfetti();
 
-        if (matchedName) {
-            // LocalStorage Check (ஏற்கனவே லாக் ஆகியிருக்கா?)
-            const savedName = localStorage.getItem('secretSantaUser');
-            if (savedName && savedName !== matchedName) {
-                errorMsg.innerText = "சாரி! இந்த போனில் ஏற்கனவே வேறொருவர் லாகின் செய்துவிட்டார்.";
-                return;
-            }
+            // 3. Show Result
+            setTimeout(() => {
+                giftContainer.style.display = 'none';
+                document.getElementById("targetName").innerText = currentUserData.target;
+                document.getElementById("resultSection").classList.add('show');
+                launchConfetti(); // One more time for fun
+            }, 600);
 
-            // Save and Show
-            localStorage.setItem('secretSantaUser', matchedName);
-            showResult(matchedName, data[matchedName]);
-        } else {
-            errorMsg.innerText = "மன்னிக்கவும், உங்கள் பெயர் லிஸ்டில் இல்லை. ஸ்பெல்லிங் செக் பண்ணுங்க.";
-        }
+        }, 500);
     }
 
-    function showResult(user, target) {
-        document.getElementById("inputSection").style.display = "none";
-        document.getElementById("resultSection").style.display = "block";
-        
-        // பெயரை முதல் எழுத்து கேப்பிட்டல் ஆக்குதல்
-        let formattedUser = user.charAt(0).toUpperCase() + user.slice(1);
-        
-        document.getElementById("userNameDisplay").innerText = formattedUser;
+    function launchConfetti() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff4757', '#2ecc71', '#f1c40f', '#8e44ad']
+        });
+    }
+</script>
+
+</body>
+</html>
         document.getElementById("targetName").innerText = target;
     }
 
