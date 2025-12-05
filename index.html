@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>✨ நண்பர்கள் கிஃப்ட் குலுக்கல் ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- Confetti Effect Script -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary-color: #d63384;
-            --glass-bg: rgba(255, 255, 255, 0.95); /* மொபைலில் தெளிவாக தெரிய 95% opacity */
+            --glass-bg: rgba(255, 255, 255, 0.95);
         }
 
         body {
@@ -18,9 +19,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* மொபைல் திரை முழுவதும் நிரம்ப */
+            min-height: 100vh;
             margin: 0;
-            overflow: hidden; /* ஸ்க்ரால் ஆவதை தடுக்க */
+            overflow: hidden; /* மொபைலில் ஸ்க்ரால் ஆவதை தடுக்க */
         }
 
         .container {
@@ -37,8 +38,8 @@
             border-radius: 20px;
             padding: 30px 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%; /* மொபைலில் அகலமாகத் தெரிய */
-            max-width: 380px; /* டெஸ்க்டாப்பில் அதிக அகலமாகாமல் இருக்க */
+            width: 90%;
+            max-width: 380px;
             text-align: center;
             position: relative;
             transform: translateY(0);
@@ -68,11 +69,11 @@
         .gift-container {
             cursor: pointer;
             position: relative;
-            width: 100px; /* மொபைலுக்கு ஏற்ற அளவு */
-            height: 100px;
-            margin: 0 auto 25px;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 10px;
             transition: transform 0.2s;
-            -webkit-tap-highlight-color: transparent; /* மொபைல் டச் ஹைலைட்டை நீக்க */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .gift-container:active { transform: scale(0.95); }
@@ -98,6 +99,7 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 25%;
             background: #ff4757; border-radius: 5px 5px 0 0; z-index: 2;
             transition: all 0.5s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         .gift-body {
             position: absolute; bottom: 0; left: 5%; width: 90%; height: 80%;
@@ -105,11 +107,11 @@
         }
         .ribbon-vertical {
             position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-            width: 15px; height: 100%; background: #ffd700; z-index: 3;
+            width: 20px; height: 100%; background: #ffd700; z-index: 3;
         }
         
         .gift-container.open .gift-lid {
-            transform: translateY(-60px) rotate(-20deg); opacity: 0;
+            transform: translateY(-80px) rotate(-20deg); opacity: 0;
         }
 
         /* Result Section */
@@ -117,13 +119,13 @@
         #resultSection.show { display: block; opacity: 1; }
 
         .target-name {
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: #28a745;
             font-weight: 800;
             margin: 15px 0;
             text-transform: uppercase;
             text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-            word-wrap: break-word; /* நீண்ட பெயர்கள் உடையாமல் இருக்க */
+            line-height: 1.2;
         }
 
         .error-box {
@@ -139,30 +141,26 @@
         .tap-hint {
             font-size: 0.85rem;
             color: var(--primary-color);
-            margin-top: -10px;
+            margin-top: 5px;
             margin-bottom: 5px;
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse { 0% {opacity: 0.6;} 50% {opacity: 1;} 100% {opacity: 0.6;} }
 
-        /* சிறிய மொபைல்களுக்கான அட்ஜஸ்ட்மென்ட் */
-        @media (max-height: 600px) {
-            .glass-card { padding: 20px; }
-            h2.main-title { font-size: 1.5rem; }
-            .gift-container { width: 80px; height: 80px; }
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="glass-card">
+        <!-- Error Message -->
         <div id="errorState" class="error-box">
             ⚠️ <b>லிங்க் தவறு!</b><br>
-            சரியான லிங்கை பயன்படுத்தவும்.<br>
-            <span style="font-size:12px; color:#555;">(எ.கா: ?id=8xK29a)</span>
+            தயவுசெய்து சரியான லிங்கை பயன்படுத்தவும்.<br>
+            <span style="font-size:11px; color:#555;">(எ.கா: index.html?id=8xK29a)</span>
         </div>
 
+        <!-- Main Content -->
         <div id="mainContent" style="display:none;">
             <h2 class="main-title">Secret Santa Reveal</h2>
             
@@ -178,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            <p class="tap-hint" id="tapText">👇 திறக்க கிஃப்ட்டை தொடவும் 👇</p>
+            <p class="tap-hint" id="tapText">👇 கிஃப்ட்டை திறக்க தொடவும் 👇</p>
 
             <div id="resultSection">
                 <hr style="opacity: 0.3; margin: 15px 0;">
@@ -192,7 +190,7 @@
 
 <script>
     // --- CONFIGURATION ---
-    // இங்கே பாதுகாப்பான ID லிஸ்ட் உள்ளது. பழைய பெயர்கள் தேவையில்லை.
+    // பெயர்களுக்கு பதிலாக இந்த ID-யை பயன்படுத்துவது பாதுகாப்பானது.
     const secretData = {
         "8xK29a": { user: "Rakshana", target: "Ramsi" },
         "b7L3mP": { user: "Ramsi", target: "Rasmi" },
@@ -234,16 +232,16 @@
         const giftBox = document.querySelector('.gift-box');
         const giftContainer = document.getElementById('giftBox');
         
-        // அனிமேஷன் தொடக்கம்
+        // 1. Shake Animation (பெட்டி ஆடும்)
         giftBox.classList.add('shake');
         document.getElementById('tapText').style.display = 'none'; // எழுத்தை மறை
 
         setTimeout(() => {
-            // பெட்டி திறத்தல்
+            // 2. Open Animation (மூடி திறக்கும்)
             giftContainer.classList.add('open');
             launchConfetti();
 
-            // ரிசல்ட் காட்டுதல்
+            // 3. Result Show (பெயர் வரும்)
             setTimeout(() => {
                 giftContainer.style.display = 'none'; // பெட்டியை மறை
                 document.getElementById("targetName").innerText = currentUserData.target;
@@ -254,263 +252,15 @@
         }, 500);
     }
 
-    // Confetti எஃபெக்ட்
+    // Confetti (காகித மழை) எஃபெக்ட்
     function launchConfetti() {
         confetti({
-            particleCount: 100,
+            particleCount: 150,
             spread: 70,
             origin: { y: 0.6 },
-            colors: ['#ff4757', '#2ecc71', '#f1c40f', '#8e44ad'],
+            colors: ['#ff4757', '#2ecc71', '#f1c40f', '#8e44ad', '#3498db'],
             disableForReducedMotion: true
         });
-    }
-</script>
-
-</body>
-</html>
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-        }
-
-        h2.main-title {
-            font-family: 'Dancing Script', cursive;
-            color: var(--primary-color);
-            font-size: 2.2rem;
-            margin-top: 0;
-        }
-
-        .greeting {
-            font-size: 1.1rem;
-            color: #444;
-            font-weight: 600;
-            margin-bottom: 25px;
-        }
-
-        /* Gift Box Animation */
-        .gift-container {
-            cursor: pointer;
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 30px;
-            transition: transform 0.3s;
-        }
-
-        .gift-container:hover { transform: scale(1.05); }
-        
-        .gift-box {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            animation: floatGift 3s ease-in-out infinite;
-        }
-
-        @keyframes floatGift {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .gift-box.shake { animation: shakeGift 0.5s ease-in-out forwards; }
-        
-        @keyframes shakeGift {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
-        }
-
-        .gift-lid {
-            position: absolute; top: 0; left: 0; width: 100%; height: 25%;
-            background: #ff4757; border-radius: 5px 5px 0 0; z-index: 2;
-            transition: all 0.5s ease-in-out;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .gift-body {
-            position: absolute; bottom: 0; left: 5%; width: 90%; height: 80%;
-            background: #ff6b81; border-radius: 0 0 5px 5px; z-index: 1;
-        }
-
-        .ribbon-vertical {
-            position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-            width: 15px; height: 100%; background: var(--accent-gold); z-index: 3;
-        }
-        
-        .gift-container.open .gift-lid {
-            transform: translateY(-80px) rotate(-20deg); opacity: 0;
-        }
-
-        /* Result Section */
-        #resultSection { display: none; opacity: 0; transition: opacity 0.5s; }
-        #resultSection.show { display: block; opacity: 1; }
-
-        .target-name {
-            font-size: 2.5rem;
-            color: #2ecc71;
-            font-weight: 800;
-            margin: 15px 0;
-            text-transform: uppercase;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-        }
-
-        .error-box {
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-        }
-
-        .instruction { font-size: 0.85rem; color: #666; margin-top: 20px; }
-        .tap-hint { font-size: 0.8rem; color: var(--primary-color); animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% {opacity: 0.6;} 50% {opacity: 1;} 100% {opacity: 0.6;} }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="glass-card">
-        <div id="errorState" class="error-box">
-            ⚠️ <b>தவறான லிங்க்!</b><br>
-            தயவுசெய்து உங்களுக்கு அனுப்பப்பட்ட லிங்கை சரியாக பயன்படுத்தவும்.
-        </div>
-
-        <div id="mainContent" style="display:none;">
-            <h2 class="main-title">Secret Santa Reveal</h2>
-            
-            <p class="greeting">ஹாய் <span id="userName" style="color:#d63384; font-weight:bold;"></span>! 👋</p>
-            
-            <div class="gift-container" id="giftBox" onclick="openGift()">
-                <p class="tap-hint">👇 திறக்க தொடவும் 👇</p>
-                <div class="gift-box">
-                    <div class="gift-lid">
-                        <div class="ribbon-vertical"></div>
-                    </div>
-                    <div class="gift-body">
-                        <div class="ribbon-vertical"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="resultSection">
-                <hr style="opacity: 0.3; margin: 20px 0;">
-                <p style="color: #555;">நீங்க கிஃப்ட் கொடுக்க வேண்டியது:</p>
-                <h1 id="targetName" class="target-name"></h1>
-                <p class="instruction">🤫 Shhh! இது பரம ரகசியம்.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // பாதுகாப்பான முறை: ரகசிய குறியீடுகள் (IDs)
-    // இங்கே ID என்பது ஒரு பாஸ்வேர்ட் போல செயல்படும். பெயரை வைத்து கண்டுபிடிக்க முடியாது.
-    const secretData = {
-        "8xK29a": { user: "Rakshana", target: "Ramsi" },
-        "b7L3mP": { user: "Ramsi", target: "Rasmi" },
-        "9qW4nR": { user: "Rasmi", target: "Afeela" },
-        "j2K8xZ": { user: "Afeela", target: "Sumaiya" },
-        "m5N9vQ": { user: "Sumaiya", target: "Aysha" },
-        "p1R6tY": { user: "Aysha", target: "Aisama" },
-        "v3X7cB": { user: "Aisama", target: "Baby" },
-        "z8M2wL": { user: "Baby", target: "Vahidha" },
-        "d4H6jK": { user: "Vahidha", target: "Aafila" },
-        "g9S2fD": { user: "Aafila", target: "Suppana" },
-        "t5Y8nH": { user: "Suppana", target: "Fathima" },
-        "c3P6kM": { user: "Fathima", target: "Rakshana" }
-    };
-
-    let currentUserData = null;
-    let isOpened = false;
-
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id'); // URL-ல் இருந்து ID-ஐ எடுக்கும்
-
-        if (id && secretData[id]) {
-            // சரியான ID இருந்தால்
-            currentUserData = secretData[id];
-            document.getElementById("userName").innerText = currentUserData.user;
-            document.getElementById("mainContent").style.display = "block";
-        } else {
-            // தவறான ID அல்லது ID இல்லை என்றால்
-            document.getElementById("errorState").style.display = "block";
-        }
-    };
-
-    function openGift() {
-        if (isOpened) return;
-        isOpened = true;
-
-        const giftBox = document.querySelector('.gift-box');
-        const giftContainer = document.getElementById('giftBox');
-        
-        // 1. Shake Animation
-        giftBox.classList.add('shake');
-        document.querySelector('.tap-hint').style.display = 'none';
-
-        setTimeout(() => {
-            // 2. Open Animation & Confetti
-            giftContainer.classList.add('open');
-            launchConfetti();
-
-            // 3. Show Result
-            setTimeout(() => {
-                giftContainer.style.display = 'none';
-                document.getElementById("targetName").innerText = currentUserData.target;
-                document.getElementById("resultSection").classList.add('show');
-                launchConfetti(); // One more time for fun
-            }, 600);
-
-        }, 500);
-    }
-
-    function launchConfetti() {
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#ff4757', '#2ecc71', '#f1c40f', '#8e44ad']
-        });
-    }
-</script>
-
-</body>
-</html>
-        document.getElementById("targetName").innerText = target;
-    }
-
-    // எழுத்து பிழையை சரி செய்யும் எளிய பங்க்ஷன்
-    function getClosestName(input) {
-        // 1. நேரடி பொருத்தம் (Exact Match)
-        if (validNames.includes(input)) return input;
-
-        // 2. பகுதி பொருத்தம் (Contains) - எ.கா: "Aish" -> "Aysha" (கொஞ்சம் ரிஸ்க், ஆனால் லிஸ்ட் சின்னது என்பதால் ஓகே)
-        // சிறந்தது: முதல் 3 எழுத்து பொருந்துகிறதா என பார்ப்பது
-        for (let name of validNames) {
-            if (name.startsWith(input.substring(0, 3))) {
-                return name;
-            }
-        }
-
-        // 3. எழுத்து ஒற்றுமை (Simple Character Overlap)
-        // எ.கா: "Somaiya" vs "Sumaiya"
-        for (let name of validNames) {
-            let matchCount = 0;
-            let minLength = Math.min(input.length, name.length);
-            for (let i = 0; i < minLength; i++) {
-                if (input[i] === name[i]) matchCount++;
-            }
-            // 70% எழுத்துக்கள் அமைந்தால் ஓகே சொல்லலாம்
-            if (matchCount / name.length > 0.6) {
-                return name;
-            }
-        }
-
-        return null; // எதுவுமே பொருந்தவில்லை என்றால்
     }
 </script>
 
