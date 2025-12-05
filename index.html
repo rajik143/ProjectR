@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>✨ நண்பர்கள் கிஃப்ட் குலுக்கல் ✨</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <!-- Confetti Effect Script -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -21,7 +20,7 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            overflow: hidden; /* மொபைலில் ஸ்க்ரால் ஆவதை தடுக்க */
+            overflow: hidden;
         }
 
         .container {
@@ -42,13 +41,8 @@
             max-width: 380px;
             text-align: center;
             position: relative;
-            transform: translateY(0);
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.8); }
-            to { opacity: 1; transform: scale(1); }
+            /* அனிமேஷன் மென்மையாக இருக்க */
+            transition: all 0.3s ease; 
         }
 
         h2.main-title {
@@ -72,11 +66,19 @@
             width: 120px;
             height: 120px;
             margin: 0 auto 10px;
-            transition: transform 0.2s;
+            /* Transition for smooth vanish */
+            transition: all 0.5s ease-in-out; 
+            transform-origin: center;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .gift-container:active { transform: scale(0.95); }
+        /* பாக்ஸ் மறையும் போது பயன்படுத்தும் Class */
+        .gift-container.vanish {
+            opacity: 0;
+            height: 0; /* உயரத்தை குறைத்து இடத்தை காலி பண்ணும் */
+            margin: 0;
+            transform: scale(0); /* சிறிதாகி மறையும் */
+        }
         
         .gift-box {
             position: relative; width: 100%; height: 100%;
@@ -115,11 +117,21 @@
         }
 
         /* Result Section */
-        #resultSection { display: none; opacity: 0; transition: opacity 0.5s; }
-        #resultSection.show { display: block; opacity: 1; }
+        #resultSection { 
+            display: none; 
+            /* Opacity மாற்றம் மெதுவாக இல்லாமல் வேகமாக இருக்க வேண்டும் */
+            animation: fadeIn 0.8s ease-in forwards; 
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #resultSection.show { display: block; }
 
         .target-name {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #28a745;
             font-weight: 800;
             margin: 15px 0;
@@ -153,14 +165,12 @@
 
 <div class="container">
     <div class="glass-card">
-        <!-- Error Message -->
         <div id="errorState" class="error-box">
             ⚠️ <b>லிங்க் தவறு!</b><br>
             தயவுசெய்து சரியான லிங்கை பயன்படுத்தவும்.<br>
-            <span style="font-size:11px; color:#555;">(எ.கா: index.html?id=8xK29a)</span>
+            <span style="font-size:11px; color:#555;">(எ.கா: ?id=8xK29a)</span>
         </div>
 
-        <!-- Main Content -->
         <div id="mainContent" style="display:none;">
             <h2 class="main-title">Secret Santa Reveal</h2>
             
@@ -189,8 +199,6 @@
 </div>
 
 <script>
-    // --- CONFIGURATION ---
-    // பெயர்களுக்கு பதிலாக இந்த ID-யை பயன்படுத்துவது பாதுகாப்பானது.
     const secretData = {
         "8xK29a": { user: "Rakshana", target: "Ramsi" },
         "b7L3mP": { user: "Ramsi", target: "Rasmi" },
@@ -210,17 +218,14 @@
     let isOpened = false;
 
     window.onload = function() {
-        // URL-ல் இருந்து ID எடுப்பது
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
         if (id && secretData[id]) {
-            // சரியான ID இருந்தால் காட்டவும்
             currentUserData = secretData[id];
             document.getElementById("userName").innerText = currentUserData.user;
             document.getElementById("mainContent").style.display = "block";
         } else {
-            // தவறான ID என்றால் எரர் காட்டவும்
             document.getElementById("errorState").style.display = "block";
         }
     };
@@ -232,27 +237,33 @@
         const giftBox = document.querySelector('.gift-box');
         const giftContainer = document.getElementById('giftBox');
         
-        // 1. Shake Animation (பெட்டி ஆடும்)
+        // 1. Shake Animation
         giftBox.classList.add('shake');
-        document.getElementById('tapText').style.display = 'none'; // எழுத்தை மறை
+        document.getElementById('tapText').style.display = 'none';
 
         setTimeout(() => {
-            // 2. Open Animation (மூடி திறக்கும்)
+            // 2. Open Lid & Confetti
             giftContainer.classList.add('open');
             launchConfetti();
 
-            // 3. Result Show (பெயர் வரும்)
+            // 3. Smooth Transition (பாக்ஸ் மறைய, பெயர் வர)
             setTimeout(() => {
-                giftContainer.style.display = 'none'; // பெட்டியை மறை
+                // பாக்ஸை சட்டென்று மறைய வைக்காமல், 'vanish' மூலம் சுருங்க செய்கிறோம்
+                giftContainer.classList.add('vanish'); 
+                
+                // பெயரை செட் செய்கிறோம்
                 document.getElementById("targetName").innerText = currentUserData.target;
+                
+                // பெயரை காட்டுகிறோம்
                 document.getElementById("resultSection").classList.add('show');
-                launchConfetti(); // மீண்டும் ஒரு முறை Confetti
-            }, 600);
+                
+                // மீண்டும் ஒரு முறை Confetti
+                launchConfetti(); 
+            }, 400); // 400ms போதும், ரொம்ப நேரம் காத்திருக்க வேண்டாம்
 
         }, 500);
     }
 
-    // Confetti (காகித மழை) எஃபெக்ட்
     function launchConfetti() {
         confetti({
             particleCount: 150,
