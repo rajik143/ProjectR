@@ -3,72 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Userscript Links</title>
+    <title>நண்பர்கள் கிஃப்ட் குலுக்கல் 🎁</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             text-align: center;
         }
-        h1 {
-            color: #333;
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
         }
-        .button-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px; /* பட்டன்களுக்கு இடையே இடைவெளி */
-        }
-        .link-button {
-            background-color: #007BFF; /* பட்டன் நிறம் */
-            color: white; /* எழுத்து நிறம் */
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none; /* இணைப்புகளில் வரும் அடிக்கோடை நீக்க */
+        h2 { color: #d63384; margin-bottom: 20px; }
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
-            display: inline-block;
-            transition: background-color 0.3s;
+            text-align: center;
         }
-        .link-button:hover {
-            background-color: #0056b3; /* பட்டன் மீது மவுஸ் வைக்கும்போது நிறம் மாறும் */
+        button {
+            background-color: #d63384;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
         }
+        button:hover { background-color: #a82465; }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            display: none;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeeba;
+        }
+        .error { color: red; font-size: 14px; margin-top: 5px; }
+        .locked-msg { color: #666; font-size: 12px; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <h1>Rajik Ali - Userscript Buttons</h1>
-    <p>SBOVDPN55121045</p>
-
-    <div class="button-container">
-        <a href="https://gist.githubusercontent.com/rajik143/d2a7f50e10e31e31003365a44d202140/raw/01.user.js" target="_blank" class="link-button">01</a>
-        <a href="https://gist.githubusercontent.com/rajik143/203114642e569dcdcf785aa489e3fded/raw/02.user.js" target="_blank" class="link-button">02</a>
-        <a href="https://gist.github.com/rajik143/c7cba907db9fe84b2546af36b67232af/raw/03.user.js" target="_blank" class="link-button">03</a>
-        <a href="https://gist.github.com/rajik143/4c37190b65c7a69fa74306eec27603d6/raw/04.user.js" target="_blank" class="link-button">04</a>
-        <a href="https://gist.github.com/rajik143/0d3f8cc36629d3109a0ac86937cd7a74/raw/05.user.js" target="_blank" class="link-button">05</a>
-        <a href="https://gist.github.com/rajik143/3c664e768903928e64924812982fbd62/raw/06.user.js" target="_blank" class="link-button">06</a>
-        <a href="https://gist.github.com/rajik143/5c8ac08e5c0cbc1eb7edd4b9d19b4208/raw/07.user.js" target="_blank" class="link-button">07</a>
-        <a href="https://gist.github.com/rajik143/e5b5117d8319b2e515390e613d8decee/raw/08.user.js" target="_blank" class="link-button">08</a>
-        <a href="https://gist.github.com/rajik143/da33d98f97dc03691df585aff58a09f8/raw/09.user.js" target="_blank" class="link-button">09</a>
-        <a href="https://gist.github.com/rajik143/5adf475d1ea385fddeaf0aeb1571af04/raw/10.user.js" target="_blank" class="link-button">10</a>
-        <a href="https://gist.github.com/rajik143/91ec4680ed460ccbecc129740463ffd8/raw/11.user.js" target="_blank" class="link-button">11</a>
-        <a href="https://gist.github.com/rajik143/e1edf921166d3c53a56a49fb943b6ce7/raw/12.user.js" target="_blank" class="link-button">12</a>
-        <a href="https://gist.github.com/rajik143/7623ac95a796b626492d94db58611deb/raw/13.user.js" target="_blank" class="link-button">13</a>
-        <a href="https://gist.github.com/rajik143/e54b22d2262add7ece1ff2190ec54b11/raw/14.user.js" target="_blank" class="link-button">14</a>
-        <a href="https://gist.github.com/rajik143/c84778fef70add629d2ec14687906856/raw/15.user.js" target="_blank" class="link-button">15</a>
-        <a href="https://gist.github.com/rajik143/770b53b780df9714819489a8a4a65414/raw/16.user.js" target="_blank" class="link-button">16</a>
-        <a href="https://gist.github.com/rajik143/d6a3e844045e5d0436ebf68807afb1ae/raw/17.user.js" target="_blank" class="link-button">17</a>
-        <a href="https://gist.github.com/rajik143/b071829efb64bb3a9062282d1fd26efa/raw/18.user.js" target="_blank" class="link-button">18</a>
-        <a href="https://gist.github.com/rajik143/f818362c7524cce821b357fdbe5623f9/raw/19.user.js" target="_blank" class="link-button">19</a>
-        <a href="https://gist.github.com/rajik143/9d04e2548356a8a5ea99096bf234292e/raw/20.user.js" target="_blank" class="link-button">20</a>
-        <a href="https://gist.github.com/rajik143/de00cafb80fdd5efe5ba6e0124a001d5/raw/21.user.js" target="_blank" class="link-button">21</a>
-        <a href="https://gist.github.com/rajik143/578ed615d283089f416501c4bff418d0/raw/22.user.js" target="_blank" class="link-button">22</a>
-        <a href="https://gist.github.com/rajik143/00cd070ad7d68c7f34ef4cb1ae524eae/raw/23.user.js" target="_blank" class="link-button">23</a>
-        <a href="https://gist.github.com/rajik143/dae6ee7d3a0b3a3c9652db12102a61e4/raw/24.user.js" target="_blank" class="link-button">24</a>
-        <a href="https://gist.github.com/rajik143/0c3c892f7adcd6ac0991656dd7f7b662/raw/25.user.js" target="_blank" class="link-button">25</a>
+<div class="card">
+    <h2>🎁 Secret Gift 🎁</h2>
+    
+    <div id="inputSection">
+        <p>உங்க பெயரை கீழே டைப் பண்ணுங்க:</p>
+        <input type="text" id="nameInput" placeholder="உங்க பெயர் (Ex: Rakshana)">
+        <br>
+        <button onclick="findMyPair()">யார் என் ஜோடி?</button>
+        <p id="errorMsg" class="error"></p>
     </div>
+
+    <div id="resultSection" class="result">
+        <p>ஹாய் <span id="userNameDisplay" style="color:#d63384;"></span>! 👋</p>
+        <hr>
+        <p>நீங்க கிஃப்ட் 🎁 வாங்கி கொடுக்க வேண்டிய ஆள்:</p>
+        <h1 id="targetName" style="color:#28a745;"></h1>
+        <p class="locked-msg">⚠️ குறிப்பு: இந்த ரிசல்ட் உங்களுக்கு மட்டும் தான் தெரியும்.</p>
+    </div>
+</div>
+
+<script>
+    // 1. பெயர் பட்டியல் மற்றும் ஜோடிகள் (Hardcoded Chain)
+    // இது ஒரு வட்டம் போல: Rakshana -> Ramsi, Ramsi -> Rasmi... கடைசி ஆள் -> Rakshana
+    const data = {
+        "rakshana": "Ramsi",
+        "ramsi": "Rasmi",
+        "rasmi": "Afeela",
+        "afeela": "Sumaiya",
+        "sumaiya": "Aysha",
+        "aysha": "Aisama",
+        "aisama": "Baby",
+        "baby": "Vahidha",
+        "vahidha": "Aafila",
+        "aafila": "Suppana",
+        "suppana": "Fathima",
+        "fathima": "Rakshana"
+    };
+
+    // சரியான பெயர்களின் பட்டியல் (For Matching)
+    const validNames = Object.keys(data);
+
+    // Page Load ஆகும்போது செக் செய்தல்
+    window.onload = function() {
+        const savedName = localStorage.getItem('secretSantaUser');
+        if (savedName) {
+            showResult(savedName, data[savedName]);
+        }
+    };
+
+    function findMyPair() {
+        let input = document.getElementById("nameInput").value.trim().toLowerCase();
+        let errorMsg = document.getElementById("errorMsg");
+        
+        if (input.length < 3) {
+            errorMsg.innerText = "பெயரை சரியாக டைப் செய்யவும்!";
+            return;
+        }
+
+        // Fuzzy Matching (எழுத்து பிழை இருந்தாலும் கண்டுபிடித்தல்)
+        let matchedName = getClosestName(input);
+
+        if (matchedName) {
+            // LocalStorage Check (ஏற்கனவே லாக் ஆகியிருக்கா?)
+            const savedName = localStorage.getItem('secretSantaUser');
+            if (savedName && savedName !== matchedName) {
+                errorMsg.innerText = "சாரி! இந்த போனில் ஏற்கனவே வேறொருவர் லாகின் செய்துவிட்டார்.";
+                return;
+            }
+
+            // Save and Show
+            localStorage.setItem('secretSantaUser', matchedName);
+            showResult(matchedName, data[matchedName]);
+        } else {
+            errorMsg.innerText = "மன்னிக்கவும், உங்கள் பெயர் லிஸ்டில் இல்லை. ஸ்பெல்லிங் செக் பண்ணுங்க.";
+        }
+    }
+
+    function showResult(user, target) {
+        document.getElementById("inputSection").style.display = "none";
+        document.getElementById("resultSection").style.display = "block";
+        
+        // பெயரை முதல் எழுத்து கேப்பிட்டல் ஆக்குதல்
+        let formattedUser = user.charAt(0).toUpperCase() + user.slice(1);
+        
+        document.getElementById("userNameDisplay").innerText = formattedUser;
+        document.getElementById("targetName").innerText = target;
+    }
+
+    // எழுத்து பிழையை சரி செய்யும் எளிய பங்க்ஷன்
+    function getClosestName(input) {
+        // 1. நேரடி பொருத்தம் (Exact Match)
+        if (validNames.includes(input)) return input;
+
+        // 2. பகுதி பொருத்தம் (Contains) - எ.கா: "Aish" -> "Aysha" (கொஞ்சம் ரிஸ்க், ஆனால் லிஸ்ட் சின்னது என்பதால் ஓகே)
+        // சிறந்தது: முதல் 3 எழுத்து பொருந்துகிறதா என பார்ப்பது
+        for (let name of validNames) {
+            if (name.startsWith(input.substring(0, 3))) {
+                return name;
+            }
+        }
+
+        // 3. எழுத்து ஒற்றுமை (Simple Character Overlap)
+        // எ.கா: "Somaiya" vs "Sumaiya"
+        for (let name of validNames) {
+            let matchCount = 0;
+            let minLength = Math.min(input.length, name.length);
+            for (let i = 0; i < minLength; i++) {
+                if (input[i] === name[i]) matchCount++;
+            }
+            // 70% எழுத்துக்கள் அமைந்தால் ஓகே சொல்லலாம்
+            if (matchCount / name.length > 0.6) {
+                return name;
+            }
+        }
+
+        return null; // எதுவுமே பொருந்தவில்லை என்றால்
+    }
+</script>
 
 </body>
 </html>
