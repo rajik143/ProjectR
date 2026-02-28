@@ -1,279 +1,119 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>✨ நண்பர்கள் கிஃப்ட் குலுக்கல் ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <style>
-        :root {
-            --primary-color: #d63384;
-            --glass-bg: rgba(255, 255, 255, 0.95);
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .container {
-            width: 100%;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            padding: 30px 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 380px;
-            text-align: center;
-            position: relative;
-            /* அனிமேஷன் மென்மையாக இருக்க */
-            transition: all 0.3s ease; 
-        }
-
-        h2.main-title {
-            font-family: 'Dancing Script', cursive;
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        .greeting {
-            font-size: 1.1rem;
-            color: #333;
-            margin-bottom: 25px;
-        }
-
-        /* Gift Box Styles */
-        .gift-container {
-            cursor: pointer;
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 10px;
-            /* Transition for smooth vanish */
-            transition: all 0.5s ease-in-out; 
-            transform-origin: center;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* பாக்ஸ் மறையும் போது பயன்படுத்தும் Class */
-        .gift-container.vanish {
-            opacity: 0;
-            height: 0; /* உயரத்தை குறைத்து இடத்தை காலி பண்ணும் */
-            margin: 0;
-            transform: scale(0); /* சிறிதாகி மறையும் */
-        }
-        
-        .gift-box {
-            position: relative; width: 100%; height: 100%;
-            animation: floatGift 3s ease-in-out infinite;
-        }
-
-        @keyframes floatGift {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .gift-box.shake { animation: shakeGift 0.5s ease-in-out forwards; }
-        @keyframes shakeGift {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-15deg); }
-            75% { transform: rotate(15deg); }
-        }
-
-        .gift-lid {
-            position: absolute; top: 0; left: 0; width: 100%; height: 25%;
-            background: #ff4757; border-radius: 5px 5px 0 0; z-index: 2;
-            transition: all 0.5s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .gift-body {
-            position: absolute; bottom: 0; left: 5%; width: 90%; height: 80%;
-            background: #ff6b81; border-radius: 0 0 5px 5px; z-index: 1;
-        }
-        .ribbon-vertical {
-            position: absolute; left: 50%; top: 0; transform: translateX(-50%);
-            width: 20px; height: 100%; background: #ffd700; z-index: 3;
-        }
-        
-        .gift-container.open .gift-lid {
-            transform: translateY(-80px) rotate(-20deg); opacity: 0;
-        }
-
-        /* Result Section */
-        #resultSection { 
-            display: none; 
-            /* Opacity மாற்றம் மெதுவாக இல்லாமல் வேகமாக இருக்க வேண்டும் */
-            animation: fadeIn 0.8s ease-in forwards; 
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #resultSection.show { display: block; }
-
-        .target-name {
-            font-size: 2.2rem;
-            color: #28a745;
-            font-weight: 800;
-            margin: 15px 0;
-            text-transform: uppercase;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
-            line-height: 1.2;
-        }
-
-        .error-box {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            padding: 15px;
-            border-radius: 10px;
-            display: none;
-            font-size: 0.9rem;
-        }
-
-        .tap-hint {
-            font-size: 0.85rem;
-            color: var(--primary-color);
-            margin-top: 5px;
-            margin-bottom: 5px;
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0% {opacity: 0.6;} 50% {opacity: 1;} 100% {opacity: 0.6;} }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Script Hub</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+  }
+  h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+  .button-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+  }
+  .script-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+  .script-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
+  }
+  .all-scripts-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .all-scripts-button {
+    background: linear-gradient(to right, #11998e 0%, #38ef7d 100%);
+    font-size: 18px;
+    padding: 20px 40px;
+    border-radius: 50px;
+    max-width: 400px;
+    width: 100%;
+  }
+  .all-scripts-button:hover {
+    background: linear-gradient(to right, #38ef7d 0%, #11998e 100%);
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <div class="glass-card">
-        <div id="errorState" class="error-box">
-            ⚠️ <b>லிங்க் தவறு!</b><br>
-            தயவுசெய்து சரியான லிங்கை பயன்படுத்தவும்.<br>
-            <span style="font-size:11px; color:#555;">(எ.கா: ?id=8xK29a)</span>
-        </div>
+<h1>Script Hub</h1>
 
-        <div id="mainContent" style="display:none;">
-            <h2 class="main-title">Secret Santa Reveal</h2>
-            
-            <p class="greeting">ஹாய் <span id="userName" style="color:#d63384; font-weight:bold;"></span>! 👋</p>
-            
-            <div class="gift-container" id="giftBox" onclick="openGift()">
-                <div class="gift-box">
-                    <div class="gift-lid">
-                        <div class="ribbon-vertical"></div>
-                    </div>
-                    <div class="gift-body">
-                        <div class="ribbon-vertical"></div>
-                    </div>
-                </div>
-            </div>
-            <p class="tap-hint" id="tapText">👇 கிஃப்ட்டை திறக்க தொடவும் 👇</p>
-
-            <div id="resultSection">
-                <hr style="opacity: 0.3; margin: 15px 0;">
-                <p style="color: #555; font-size: 0.9rem;">நீங்க கிஃப்ட் கொடுக்க வேண்டியது:</p>
-                <h1 id="targetName" class="target-name"></h1>
-                <p style="color: #888; font-size: 0.8rem; margin-top: 20px;">🤫 இது ரகசியம்! யார்கிட்டயும் சொல்லாதீங்க.</p>
-            </div>
-        </div>
-    </div>
+<div class="button-container">
+  <a href="https://gist.githubusercontent.com/rajik143/d2a7f50e10e31e31003365a44d202140/raw/01.user.js" target="_blank" class="script-button">Script 01</a>
+  <a href="https://gist.githubusercontent.com/rajik143/203114642e569dcdcf785aa489e3fded/raw/02.user.js" target="_blank" class="script-button">Script 02</a>
+  <a href="https://gist.github.com/rajik143/c7cba907db9fe84b2546af36b67232af/raw/03.user.js" target="_blank" class="script-button">Script 03</a>
+  <a href="https://gist.github.com/rajik143/4c37190b65c7a69fa74306eec27603d6/raw/04.user.js" target="_blank" class="script-button">Script 04</a>
+  <a href="https://gist.github.com/rajik143/0d3f8cc36629d3109a0ac86937cd7a74/raw/05.user.js" target="_blank" class="script-button">Script 05</a>
+  <a href="https://gist.github.com/rajik143/3c664e768903928e64924812982fbd62/raw/06.user.js" target="_blank" class="script-button">Script 06</a>
+  <a href="https://gist.github.com/rajik143/5c8ac08e5c0cbc1eb7edd4b9d19b4208/raw/07.user.js" target="_blank" class="script-button">Script 07</a>
+  <a href="https://gist.github.com/rajik143/e5b5117d8319b2e515390e613d8decee/raw/08.user.js" target="_blank" class="script-button">Script 08</a>
+  <a href="https://gist.github.com/rajik143/da33d98f97dc03691df585aff58a09f8/raw/09.user.js" target="_blank" class="script-button">Script 09</a>
+  <a href="https://gist.github.com/rajik143/5adf475d1ea385fddeaf0aeb1571af04/raw/10.user.js" target="_blank" class="script-button">Script 10</a>
+  <a href="https://gist.github.com/rajik143/91ec4680ed460ccbecc129740463ffd8/raw/11.user.js" target="_blank" class="script-button">Script 11</a>
+  <a href="https://gist.github.com/rajik143/e1edf921166d3c53a56a49fb943b6ce7/raw/12.user.js" target="_blank" class="script-button">Script 12</a>
+  <a href="https://gist.github.com/rajik143/7623ac95a796b626492d94db58611deb/raw/13.user.js" target="_blank" class="script-button">Script 13</a>
+  <a href="https://gist.github.com/rajik143/e54b22d2262add7ece1ff2190ec54b11/raw/14.user.js" target="_blank" class="script-button">Script 14</a>
+  <a href="https://gist.github.com/rajik143/c84778fef70add629d2ec14687906856/raw/15.user.js" target="_blank" class="script-button">Script 15</a>
+  <a href="https://gist.github.com/rajik143/770b53b780df9714819489a8a4a65414/raw/16.user.js" target="_blank" class="script-button">Script 16</a>
+  <a href="https://gist.github.com/rajik143/d6a3e844045e5d0436ebf68807afb1ae/raw/17.user.js" target="_blank" class="script-button">Script 17</a>
+  <a href="https://gist.github.com/rajik143/b071829efb64bb3a9062282d1fd26efa/raw/18.user.js" target="_blank" class="script-button">Script 18</a>
+  <a href="https://gist.github.com/rajik143/f818362c7524cce821b357fdbe5623f9/raw/19.user.js" target="_blank" class="script-button">Script 19</a>
+  <a href="https://gist.github.com/rajik143/9d04e2548356a8a5ea99096bf234292e/raw/20.user.js" target="_blank" class="script-button">Script 20</a>
+  <a href="https://gist.github.com/rajik143/de00cafb80fdd5efe5ba6e0124a001d5/raw/21.user.js" target="_blank" class="script-button">Script 21</a>
+  <a href="https://gist.github.com/rajik143/578ed615d283089f416501c4bff418d0/raw/22.user.js" target="_blank" class="script-button">Script 22</a>
+  <a href="https://gist.github.com/rajik143/00cd070ad7d68c7f34ef4cb1ae524eae/raw/23.user.js" target="_blank" class="script-button">Script 23</a>
+  <a href="https://gist.github.com/rajik143/dae6ee7d3a0b3a3c9652db12102a61e4/raw/24.user.js" target="_blank" class="script-button">Script 24</a>
+  <a href="https://gist.github.com/rajik143/0c3c892f7adcd6ac0991656dd7f7b662/raw/25.user.js" target="_blank" class="script-button">Script 25</a>
+  <a href="https://gist.github.com/rajik143/335c5e98c3e5647a20ebceca5caaf56f/raw/26.user.js" target="_blank" class="script-button">Script 26</a>
+  <a href="https://gist.github.com/rajik143/1298a72d2dbec27c93d4157d939cdaa7/raw/27.user.js" target="_blank" class="script-button">Script 27</a>
+  <a href="https://gist.github.com/rajik143/3fcb3ab4c18e510a0ce5b3dc227bd460/raw/28.user.js" target="_blank" class="script-button">Script 28</a>
+  <a href="https://gist.github.com/rajik143/04be57c9ae6f5d06c948bc22a0c118a6/raw/29.user.js" target="_blank" class="script-button">Script 29</a>
+  <a href="https://gist.github.com/rajik143/d4d245ea8a3882431ad6b07d1b81714f/raw/30.user.js" target="_blank" class="script-button">Script 30</a>
 </div>
 
-<script>
-    const secretData = {
-        "8xK29a": { user: "Rakshana", target: "Ramsi" },
-        "b7L3mP": { user: "Ramsi", target: "Rasmi" },
-        "9qW4nR": { user: "Rasmi", target: "Afeela" },
-        "j2K8xZ": { user: "Afeela", target: "Sumaiya" },
-        "m5N9vQ": { user: "Sumaiya", target: "Aysha" },
-        "p1R6tY": { user: "Aysha", target: "Aisama" },
-        "v3X7cB": { user: "Aisama", target: "Baby" },
-        "z8M2wL": { user: "Baby", target: "Vahidha" },
-        "d4H6jK": { user: "Vahidha", target: "Aafila" },
-        "g9S2fD": { user: "Aafila", target: "Suppana" },
-        "t5Y8nH": { user: "Suppana", target: "Fathima" },
-        "c3P6kM": { user: "Fathima", target: "Rakshana" }
-    };
+<hr style="border: 0; height: 1px; background: #ddd; margin: 30px 0;">
 
-    let currentUserData = null;
-    let isOpened = false;
-
-    window.onload = function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-
-        if (id && secretData[id]) {
-            currentUserData = secretData[id];
-            document.getElementById("userName").innerText = currentUserData.user;
-            document.getElementById("mainContent").style.display = "block";
-        } else {
-            document.getElementById("errorState").style.display = "block";
-        }
-    };
-
-    function openGift() {
-        if (isOpened) return;
-        isOpened = true;
-
-        const giftBox = document.querySelector('.gift-box');
-        const giftContainer = document.getElementById('giftBox');
-        
-        // 1. Shake Animation
-        giftBox.classList.add('shake');
-        document.getElementById('tapText').style.display = 'none';
-
-        setTimeout(() => {
-            // 2. Open Lid & Confetti
-            giftContainer.classList.add('open');
-            launchConfetti();
-
-            // 3. Smooth Transition (பாக்ஸ் மறைய, பெயர் வர)
-            setTimeout(() => {
-                // பாக்ஸை சட்டென்று மறைய வைக்காமல், 'vanish' மூலம் சுருங்க செய்கிறோம்
-                giftContainer.classList.add('vanish'); 
-                
-                // பெயரை செட் செய்கிறோம்
-                document.getElementById("targetName").innerText = currentUserData.target;
-                
-                // பெயரை காட்டுகிறோம்
-                document.getElementById("resultSection").classList.add('show');
-                
-                // மீண்டும் ஒரு முறை Confetti
-                launchConfetti(); 
-            }, 400); // 400ms போதும், ரொம்ப நேரம் காத்திருக்க வேண்டாம்
-
-        }, 500);
-    }
-
-    function launchConfetti() {
-        confetti({
-            particleCount: 150,
-            spread: 70,
-            origin: { y: 0.6 },
-            colors: ['#ff4757', '#2ecc71', '#f1c40f', '#8e44ad', '#3498db'],
-            disableForReducedMotion: true
-        });
-    }
-</script>
+<div class="all-scripts-container">
+  <a href="https://gist.github.com/rajik143/45dfe383eb7ec84bffd206f2af688274/raw//Scripts.json" target="_blank" class="script-button all-scripts-button">⬇️ All Scripts (JSON)</a>
+</div>
 
 </body>
 </html>
+
